@@ -1,28 +1,68 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <el-container class="music-container">
+      <el-aside class="music-asider" width="200px">
+        <HomepageMenu/>
+      </el-aside>
+      <el-container>
+        <el-header class="music-header">
+          <HomepageHeader/>
+        </el-header>
+        <el-main class="music-main">
+          <HomepageContent/>
+        </el-main>
+        <el-footer class="music-footer">
+          <MusicPlayer/>
+        </el-footer>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import HomepageMenu from "./components/HomepageMenu.vue"
+import HomepageHeader from "./components/HomepageHeader.vue";
+import HomepageContent from "./components/HomepageContent.vue"
+import MusicPlayer from "@/components/MusicPlayer.vue";
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HomepageMenu,
+    HomepageContent,
+    HomepageHeader,
+    MusicPlayer
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  html, body {
+    height: 100%;
+    width: 100%;
+  }
+  #app {
+    height: 100%;
+    width: 100%;
+  }
+
+  .music-container,.music-asider, .music-main {
+    height: 100%;
+  }
+
+  .music-header {
+    line-height: 60px;
+    background-color: #545c64;
+    padding: 10px;
+  }
+
+  .music-footer {
+    background: #545c64;
+    height: 90px;
+    padding: 0;
+  }
+
 </style>
