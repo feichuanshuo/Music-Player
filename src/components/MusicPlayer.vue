@@ -1,21 +1,22 @@
 <template>
   <div class="music-player">
 <!--进度条-->
-    <div class="music-player-progress" ref="progressRef" @click="clickProgress">
-      <div class="progress-bar" ref="progressbarRef">
+    <div class="music-player-progress" ref="progressRef" @mousedown.stop="progressDown" @mouseover="showBtn=true" @mouseleave="showBtn=false">
+      <div class="progress-bar" ref="progressbarRef" >
         <div
-            class="progress-now"
+            class="progress-btn"
+            @mousedown="btnDown"
+            v-show="showBtn"
         ></div>
       </div>
     </div>
-    <input type="range" class="music-player-progress" v-model="rate">
 <!--播放器-->
     <audio
         :src="url"
         autoplay
         ref="audioRef"
+        loop
         @timeupdate="timeupdate"
-
     ></audio>
 <!--歌曲信息-->
     <div class="music-player-start">
@@ -34,14 +35,23 @@
       <i class="el-icon-video-pause" v-show="isPlay" @click="pauseMusic"></i>
       <i class="el-icon-video-play" v-show="!isPlay" @click="playMusic"></i>
       <i class="iconfont icon-1_music82 music-player-icon"></i>
-      <i class="iconfont icon-zhongdengyinliang" style="font-size: 26px;color: #ffffff;"></i>
+      <i class="iconfont icon-zhongdengyinliang volume-btn">
+          <div class="music-volume">
+            <el-slider
+                class="volume-slider"
+                v-model="volume"
+                vertical
+                @input="volumeChange"
+                height="120px">
+            </el-slider>
+          </div>
+      </i>
     </div>
 <!--音乐列表控件-->
     <div class="music-player-end">
       <div style="padding-right: 10px;color: #ffffff">{{currentTime}} / {{duration}}</div>
       <i class="iconfont icon-bofangliebiao" style="font-size: 26px;"></i>
     </div>
-
   </div>
 </template>
 
@@ -55,9 +65,11 @@ export default {
       cover: "https://y.qq.com/music/photo_new/T002R300x300M000002Neh8l0uciQZ_1.jpg",
       name: "稻香",
       singer: "周杰伦",
+      volume: 100,
       currentTime: "00:00",
       duration: "00:00",
-      rate:"0"
+      isDraging: false,
+      showBtn: false,
     };
   },
   methods: {
@@ -73,32 +85,54 @@ export default {
     },
     // 更新歌曲时间
     timeupdate(){
+      if(this.isDraging) return
       this.currentTime = this.s_to_ms(this.$refs.audioRef.currentTime)
       this.duration = this.s_to_ms(this.$refs.audioRef.duration)
-      this.rate = this.$refs.audioRef.currentTime / this.$refs.audioRef.duration * 100
       this.$refs.progressbarRef.style.width = this.$refs.audioRef.currentTime / this.$refs.audioRef.duration * 100 + '%'
     },
-    // 拖动进度条
-    changeProgress(){
-      this.$refs.audioRef.currentTime = this.rate / 100 * this.$refs.audioRef.duration
+    // 控制按钮按下
+    btnDown(){
+      this.isDraging = true
+      document.addEventListener('mousemove', this.changeProgress)
+      document.addEventListener('mouseup', this.btnUp)
     },
-    // 点击进度条改变进度
-    clickProgress(e){
-      let progress = this.$refs.progressRef
-      let progressbar = this.$refs.progressbarRef
-      let rate = (e.clientX - progress.getBoundingClientRect().left) / progress.offsetWidth
-      progressbar.style.width = rate * 100 + '%'
+    // 进度条按下
+    progressDown(e){
+      this.isDraging = true
+      let rate = (e.clientX - this.$refs.progressRef.getBoundingClientRect().left) / this.$refs.progressRef.offsetWidth
+      this.$refs.progressbarRef.style.width = rate * 100 + '%'
+      document.addEventListener('mousemove', this.changeProgress)
+      document.addEventListener('mouseup', this.btnUp)
+    },
+
+    // 拖动进度条
+    changeProgress(e){
+      let rate = (e.clientX - this.$refs.progressRef.getBoundingClientRect().left) / this.$refs.progressRef.offsetWidth
+      this.$refs.progressbarRef.style.width = rate * 100 + '%'
+    },
+
+    // 控制按钮弹起
+    btnUp(e){
+      let rate = (e.clientX - this.$refs.progressRef.getBoundingClientRect().left) / this.$refs.progressRef.offsetWidth
       this.$refs.audioRef.currentTime = rate * this.$refs.audioRef.duration
+      document.removeEventListener('mousemove', this.changeProgress)
+      document.removeEventListener('mouseup', this.btnUp)
+      this.isDraging = false
     },
 
     //秒转分秒
-    s_to_ms(time){
+    s_to_ms(time) {
       let m = Math.floor(time / 60)
       let s = Math.floor(time % 60)
       m = m < 10 ? '0' + m : m
       s = s < 10 ? '0' + s : s
       return m + ':' + s
-    }
+    },
+
+    // 音量控制
+    volumeChange(){
+      this.$refs.audioRef.volume = this.volume / 100
+    },
   },
 }
 </script>
@@ -158,14 +192,50 @@ export default {
     position: relative;
   }
 
-  .progress-now {
+  .progress-btn {
     background: #000000;
     height:10px;
     width: 10px;
     border-radius: 50%;
-    right: -4px;
+    right: -10px;
     top: -3px;
     position: absolute;
+  }
+  .volume-btn {
+    font-size: 26px;
+    color: #ffffff;
+    position: relative;
+    justify-content: center
+  }
+  .music-volume {
+    display: flex;
+    position: absolute;
+    flex-flow: row;
+    justify-content: center;
+    top:-225px;
+    left: -17px;
+    width: 50px;
+    height: 200px;
+    background: #35383f;
+    padding: 5px;
+    border-radius: 10px;
+  }
+
+  .volume-btn:after {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #35383f;
+    content: "";
+    position: absolute;
+    top: -15px;
+    left: 4px
+  }
+
+  .volume-slider {
+    margin-top: 20px;
+    border-bottom: black solid 1px;
   }
 
 </style>
