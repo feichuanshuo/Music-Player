@@ -35,15 +35,20 @@
       <i class="el-icon-video-pause" v-show="isPlay" @click="pauseMusic"></i>
       <i class="el-icon-video-play" v-show="!isPlay" @click="playMusic"></i>
       <i class="iconfont icon-1_music82 music-player-icon"></i>
-      <i class="iconfont icon-zhongdengyinliang volume-btn">
-          <div class="music-volume">
-            <el-slider
-                class="volume-slider"
-                v-model="volume"
-                vertical
-                @input="volumeChange"
-                height="120px">
-            </el-slider>
+      <i class="iconfont icon-zhongdengyinliang volume-btn" @click="showVolumeBox=!showVolumeBox">
+          <div class="music-volume" v-if="showVolumeBox">
+            <div class="volume-slider">
+              <el-slider
+                  v-model="volume"
+                  vertical
+                  @input="volumeChange"
+                  height="120px">
+              </el-slider>
+            </div>
+            <div class="mute-btn">
+              <i v-if="!isMute" class="iconfont icon-zhongdengyinliang" @click="mute"></i>
+              <i v-else class="iconfont icon-guanbishengyin" @click="cancelMute"></i>
+            </div>
           </div>
       </i>
     </div>
@@ -70,7 +75,19 @@ export default {
       duration: "00:00",
       isDraging: false,
       showBtn: false,
+      isMute: false,
+      showVolumeBox: false
     };
+  },
+  watch: {
+    volume(){
+      if(this.volume === 0){
+        this.isMute = true
+      }
+      else {
+        this.isMute = false
+      }
+    }
   },
   methods: {
     // 播放音乐
@@ -133,6 +150,18 @@ export default {
     volumeChange(){
       this.$refs.audioRef.volume = this.volume / 100
     },
+
+    // 静音
+    mute(){
+      this.isMute = true
+      this.$refs.audioRef.volume = 0
+    },
+
+    // 取消静音
+    cancelMute(){
+      this.isMute = false
+      this.$refs.audioRef.volume = this.volume / 100
+    }
   },
 }
 </script>
@@ -210,7 +239,7 @@ export default {
   .music-volume {
     display: flex;
     position: absolute;
-    flex-flow: row;
+    flex-flow: column;
     justify-content: center;
     top:-225px;
     left: -17px;
@@ -221,7 +250,7 @@ export default {
     border-radius: 10px;
   }
 
-  .volume-btn:after {
+  .music-volume:after {
     width: 0;
     height: 0;
     border-left: 10px solid transparent;
@@ -229,13 +258,27 @@ export default {
     border-top: 10px solid #35383f;
     content: "";
     position: absolute;
-    top: -15px;
-    left: 4px
+    bottom: -8px;
+    left: 20px
   }
 
   .volume-slider {
-    margin-top: 20px;
+    padding: 10px 0;
     border-bottom: black solid 1px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .mute-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+  }
+
+  .mute-btn i {
+    font-size: 26px;
+    color: #ffffff;
   }
 
 </style>
