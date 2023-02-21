@@ -57,6 +57,8 @@ export default {
     line-height: 60px;
     background-color: #545c64;
     padding: 10px;
+    /*允许拖动*/
+    -webkit-app-region: drag;
   }
 
   .music-footer {

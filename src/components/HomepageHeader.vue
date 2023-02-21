@@ -1,30 +1,60 @@
 <template>
   <div style="height: 40px;line-height: 40px; display: flex; width: 100%">
-    <div class="page-panel">
+    <div class="left-panel">
       <i class="el-icon-arrow-left my-icon" title="后退"></i>
       <i class="el-icon-arrow-right my-icon" title="前进"></i>
       <div class="search-input">
-        <input type="text" placeholder="搜索音乐"/>
-        <i class="el-icon-search search-icon"></i>
+        <input type="text" placeholder="搜索音乐" v-model="songName"/>
+        <i class="el-icon-search search-icon" @click="searchMusic"></i>
       </div>
     </div>
-    <div class="user-panel">
-      <el-avatar src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif" :size="30" class="user-avatar"></el-avatar>
-      <span>超人阿光</span>
-    </div>
-    <div class="control-panel">
-      <i class="el-icon-s-operation"></i>
-      <el-divider direction="vertical"></el-divider>
-      <i class="el-icon-minus"></i>
-      <i class="el-icon-full-screen"></i>
-      <i class="el-icon-close"></i>
+    <div class="right-panel">
+      <div class="user-panel">
+        <el-avatar src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif" :size="30" class="user-avatar"></el-avatar>
+        <span>超人阿光</span>
+      </div>
+      <div class="control-panel">
+        <i class="el-icon-s-operation"></i>
+        <el-divider direction="vertical"></el-divider>
+        <i class="el-icon-minus" @click="minWindow"></i>
+        <i class="el-icon-full-screen" @click="maxWindow"></i>
+        <i class="el-icon-close" @click="closeWindow"></i>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import {requestMusic} from "@/api";
 export default {
-  name: "HomepageHeader"
+  name: "HomepageHeader",
+  data(){
+    return {
+      songName: '',
+      searchResult: []
+    }
+  },
+  methods: {
+    // 搜索音乐
+    searchMusic(){
+      requestMusic(this.songName).then(res => {
+
+        console.log(res)
+      })
+    },
+    // 关闭窗口
+    closeWindow(){
+      window.ipcRenderer.send('close-window');
+    },
+    // 最大化窗口
+    maxWindow(){
+      window.ipcRenderer.send('max-window');
+    },
+    // 最小化窗口
+    minWindow(){
+      window.ipcRenderer.send('min-window');
+    }
+  }
 }
 </script>
 
@@ -42,9 +72,6 @@ export default {
     display: flex;
     padding: 0 10px;
     background: #fff;
-    width: 200px;
-    order: 0;
-    flex: 1;
   }
   .search-input input {
     border: 0;
@@ -61,12 +88,18 @@ export default {
     color: #15c21d;
   }
 
-  .page-panel {
-    order: 0;
-    flex: 5;
+  .left-panel {
+    flex: 1;
+
     display: flex;
     align-items: center;
-    padding-right: 50%;
+  }
+
+  .right-panel {
+    flex:1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
   }
 
   .user-panel {
@@ -82,6 +115,7 @@ export default {
   }
 
   .user-panel span {
+
     color: #fff;
     font-size: 14px;
     margin: auto 10px;
@@ -97,6 +131,11 @@ export default {
 
   .control-panel i {
     padding: 10px 5px;
+  }
+
+  .control-panel * {
+    /*阻止拖动*/
+    -webkit-app-region: no-drag;
   }
 
 </style>

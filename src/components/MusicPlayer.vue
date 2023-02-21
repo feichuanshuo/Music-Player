@@ -17,7 +17,9 @@
         ref="audioRef"
         loop
         @timeupdate="timeupdate"
-    ></audio>
+    >
+      <source :src="url" type="audio/mpeg">
+    </audio>
 <!--歌曲信息-->
     <div class="music-player-start">
       <el-image
@@ -35,7 +37,7 @@
       <i class="el-icon-video-pause" v-show="isPlay" @click="pauseMusic"></i>
       <i class="el-icon-video-play" v-show="!isPlay" @click="playMusic"></i>
       <i class="iconfont icon-1_music82 music-player-icon"></i>
-      <i class="iconfont icon-zhongdengyinliang volume-btn" @click="showVolumeBox=!showVolumeBox">
+      <i class="iconfont icon-zhongdengyinliang volume-btn" @click.self="showVolumeBox=!showVolumeBox">
           <div class="music-volume" v-if="showVolumeBox">
             <div class="volume-slider">
               <el-slider
@@ -110,16 +112,16 @@ export default {
     // 控制按钮按下
     btnDown(){
       this.isDraging = true
-      document.addEventListener('mousemove', this.changeProgress)
-      document.addEventListener('mouseup', this.btnUp)
+      window.addEventListener('mousemove', this.changeProgress)
+      window.addEventListener('mouseup', this.btnUp)
     },
     // 进度条按下
     progressDown(e){
       this.isDraging = true
       let rate = (e.clientX - this.$refs.progressRef.getBoundingClientRect().left) / this.$refs.progressRef.offsetWidth
       this.$refs.progressbarRef.style.width = rate * 100 + '%'
-      document.addEventListener('mousemove', this.changeProgress)
-      document.addEventListener('mouseup', this.btnUp)
+      window.addEventListener('mousemove', this.changeProgress)
+      window.addEventListener('mouseup', this.btnUp)
     },
 
     // 拖动进度条
@@ -132,8 +134,8 @@ export default {
     btnUp(e){
       let rate = (e.clientX - this.$refs.progressRef.getBoundingClientRect().left) / this.$refs.progressRef.offsetWidth
       this.$refs.audioRef.currentTime = rate * this.$refs.audioRef.duration
-      document.removeEventListener('mousemove', this.changeProgress)
-      document.removeEventListener('mouseup', this.btnUp)
+      window.removeEventListener('mousemove', this.changeProgress)
+      window.removeEventListener('mouseup', this.btnUp)
       this.isDraging = false
     },
 
@@ -154,13 +156,13 @@ export default {
     // 静音
     mute(){
       this.isMute = true
-      this.$refs.audioRef.volume = 0
+      this.$refs.audioRef.muted = true
     },
 
     // 取消静音
     cancelMute(){
       this.isMute = false
-      this.$refs.audioRef.volume = this.volume / 100
+      this.$refs.audioRef.muted = false
     }
   },
 }

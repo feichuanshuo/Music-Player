@@ -36,7 +36,9 @@
     </el-menu-item>
     <el-menu-item index="6" class="my-menu-item">
       <i class="el-icon-setting"></i>
-      <span slot="title">本地音乐</span>
+      <span slot="title" @click="()=>this.$router.push('/localmusic')">
+          本地音乐
+      </span>
     </el-menu-item>
     <el-menu-item index="7" class="my-menu-item">
       <i class="el-icon-setting"></i>
