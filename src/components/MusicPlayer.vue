@@ -12,13 +12,12 @@
     </div>
 <!--播放器-->
     <audio
-        :src="url"
+        :src="currentMusic.src"
         autoplay
         ref="audioRef"
         loop
         @timeupdate="timeupdate"
     >
-      <source :src="url" type="audio/mpeg">
     </audio>
 <!--歌曲信息-->
     <div class="music-player-start">
@@ -27,7 +26,7 @@
         style = "width: 36px;height: 36px; margin: auto 10px;"
       ></el-image>
       <div>
-        <p>{{name}} - {{singer}}</p>
+        <p>{{currentMusic.name}} - {{currentMusic.singer}}</p>
       </div>
     </div>
 <!--控制控件-->
@@ -67,11 +66,9 @@ export default {
   name: "MusicPlayer",
   data() {
     return {
+      currentMusic:{},
       isPlay: true,
-      url: "http://aqqmusic.tc.qq.com/amobile.music.tc.qq.com/M5000020wJDo3cx0j3.mp3?guid=B69D8BC956E47C2B65440380380B7E9A&vkey=8FC4285D94927B7DC61696FD460343E717F641F85BE23A69ED88A6A4D993649B6247A77AFE4F2D4403C45B879CC93704BC16D7D4DD378464&uin=1828222534&fromtag=119045",
       cover: "https://y.qq.com/music/photo_new/T002R300x300M000002Neh8l0uciQZ_1.jpg",
-      name: "稻香",
-      singer: "周杰伦",
       volume: 100,
       currentTime: "00:00",
       duration: "00:00",
@@ -92,6 +89,11 @@ export default {
     }
   },
   methods: {
+    // 设置当前音乐
+    setCurrentMusic(data){
+      this.currentMusic = data
+    },
+
     // 播放音乐
     playMusic(){
       this.isPlay = true
@@ -112,16 +114,16 @@ export default {
     // 控制按钮按下
     btnDown(){
       this.isDraging = true
-      window.addEventListener('mousemove', this.changeProgress)
-      window.addEventListener('mouseup', this.btnUp)
+      document.addEventListener('mousemove', this.changeProgress)
+      document.addEventListener('mouseup', this.btnUp)
     },
     // 进度条按下
     progressDown(e){
       this.isDraging = true
       let rate = (e.clientX - this.$refs.progressRef.getBoundingClientRect().left) / this.$refs.progressRef.offsetWidth
       this.$refs.progressbarRef.style.width = rate * 100 + '%'
-      window.addEventListener('mousemove', this.changeProgress)
-      window.addEventListener('mouseup', this.btnUp)
+      document.addEventListener('mousemove', this.changeProgress)
+      document.addEventListener('mouseup', this.btnUp)
     },
 
     // 拖动进度条
@@ -134,8 +136,8 @@ export default {
     btnUp(e){
       let rate = (e.clientX - this.$refs.progressRef.getBoundingClientRect().left) / this.$refs.progressRef.offsetWidth
       this.$refs.audioRef.currentTime = rate * this.$refs.audioRef.duration
-      window.removeEventListener('mousemove', this.changeProgress)
-      window.removeEventListener('mouseup', this.btnUp)
+      document.removeEventListener('mousemove', this.changeProgress)
+      document.removeEventListener('mouseup', this.btnUp)
       this.isDraging = false
     },
 
@@ -165,6 +167,9 @@ export default {
       this.$refs.audioRef.muted = false
     }
   },
+  mounted() {
+    this.$bus.$on('setCurrentMusic',this.setCurrentMusic)
+  }
 }
 </script>
 

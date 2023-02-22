@@ -1,4 +1,5 @@
 const { app, BrowserWindow , ipcMain} = require('electron')
+require('@electron/remote/main').initialize()
 
 const reload = require('electron-reloader');
 reload(module)
@@ -14,9 +15,9 @@ const createWindow = () => {
             enableRemoteModule: true,
             // 关闭上下文隔离
             contextIsolation: false,
+            // 关闭同源策略
+            webSecurity: false,
             preload: __dirname + '/preload.js',
-            // 禁用同源策略
-            webSecurity: false
         }
     })
 
@@ -37,6 +38,8 @@ const createWindow = () => {
     ipcMain.on('min-window', () => {
         win.minimize()
     })
+    require('@electron/remote/main').enable(win.webContents)
+
 }
 app.whenReady().then(() => {
     createWindow()
