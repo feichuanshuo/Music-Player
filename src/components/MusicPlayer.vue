@@ -15,7 +15,6 @@
         :src="currentMusic.src"
         autoplay
         ref="audioRef"
-        loop
         @timeupdate="timeupdate"
     >
     </audio>
@@ -58,6 +57,9 @@
       <div style="padding-right: 10px;color: #ffffff">{{currentTime}} / {{duration}}</div>
       <i class="iconfont icon-bofangliebiao" style="font-size: 26px;"></i>
     </div>
+    <div class="music-list">
+
+    </div>
   </div>
 </template>
 
@@ -67,7 +69,7 @@ export default {
   data() {
     return {
       currentMusic:{},
-      isPlay: true,
+      isPlay: false,
       cover: "https://y.qq.com/music/photo_new/T002R300x300M000002Neh8l0uciQZ_1.jpg",
       volume: 100,
       currentTime: "00:00",
@@ -92,6 +94,7 @@ export default {
     // 设置当前音乐
     setCurrentMusic(data){
       this.currentMusic = data
+      this.isPlay = true
     },
 
     // 播放音乐
@@ -286,6 +289,15 @@ export default {
   .mute-btn i {
     font-size: 26px;
     color: #ffffff;
+  }
+
+  .music-list {
+    position: fixed;
+    width: 300px;
+    height: 100%;
+    background: black;
+    right: 0;
+    top: 0;
   }
 
 </style>

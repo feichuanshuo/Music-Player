@@ -1,32 +1,43 @@
 <template>
-  <div>
-    <el-table
-        :data="musicList"
-        style="width: 100%"
-    >
-      <el-table-column
-          label="歌名"
-          width="180"
+  <div id="localMusicPage">
+    <header class="page-title">本地音乐</header>
+    <div class="page-list">
+      <el-table
+          :data="musicList"
+          style="width: 100%;background: inherit"
+          :header-cell-style="{ background: 'rgba(84,92,100,0.0)', color: '#c3c3c5',border: 'none' }"
+          :header-row-style="{ background: 'rgba(84,92,100,0.0)'}"
+          :row-style="{ background: 'rgba(84,92,100,0.0)' , color: '#fff' , border: '0'}"
+          :cell-style="{border: 'none'}"
       >
-        <template v-slot="data">
-            <span @dblclick="changeMusic(data.row)">{{data.row.name}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-          prop="singer"
-          label="歌手"
-          width="180">
-      </el-table-column>
-      <el-table-column
-          prop="album"
-          label="专辑">
-      </el-table-column>
-    </el-table>
+        <el-table-column
+            label="歌名"
+            width="180"
+        >
+          <template v-slot="data">
+            <span @dblclick="changeMusic(data.row)" class="song-title">{{data.row.name}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+            label="歌手"
+            width="180">
+          <template v-slot="data">
+            <span class="song-title">{{data.row.singer}}</span>
+          </template>
+        </el-table-column>
+        <el-table-column
+            label="专辑">
+          <template v-slot="data">
+            <span class="song-title">{{data.row.album}}</span>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
   </div>
 </template>
 
 <script>
-const { NodeID3,fs } = window
+const { fs,jsmediatags,iconv } = window
 export default {
   name: "LocalMusic",
   data() {
@@ -49,16 +60,21 @@ export default {
       if (err) return console.error(err);
       for (let i = 0; i < data.length; i++) {
         let musicpath = 'F:\\MUSIC\\' + data[i];
-        NodeID3.read(musicpath, (err, tags) => {
-          if (err) return console.error(err);
-          let musicMessage = {
-            name: tags.title,
-            singer: tags.artist,
-            album: tags.album,
-            src: musicpath
-          };
-          musicList.push(musicMessage);
-        })
+        jsmediatags.read(musicpath, {
+          onSuccess: function(song) {
+            let {tags} = song
+            let musicMessage = {
+              name: tags.title?tags.title:data[i].split('.')[0],
+              singer: tags.artist,
+              album: tags.album,
+              src: musicpath
+            };
+            musicList.push(musicMessage);
+          },
+          onError: function(error) {
+            console.log(':(', error.type, error.info);
+          }
+        });
       }
     });
     this.musicList = musicList;
@@ -66,6 +82,33 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+  #localMusicPage {
+    background: inherit;
+  }
+
+
+  .page-title {
+    font-size: 30px;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 20px 0;
+  }
+
+  .page-list {
+    padding: 10px;
+  }
+  .song-title {
+    cursor: pointer;
+    color: #ffffff;
+    -moz-user-select:none;/*火狐*/
+    -webkit-user-select:none;/*webkit浏览器*/
+    -ms-user-select:none;/*IE10*/
+    -khtml-user-select:none;/*早期浏览器*/
+    user-select:none;
+  }
+  .el-table tbody tr:hover>td {
+    background-color: rgba(84,92,100,0.7) !important
+  }
 
 </style>

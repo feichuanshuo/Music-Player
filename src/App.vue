@@ -53,9 +53,12 @@ export default {
     height: 100%;
   }
 
+  .music-container,.music-footer,.music-header,.music-main  {
+    background: rgba(84,92,100,0.7);
+  }
+
   .music-header {
     line-height: 60px;
-    background-color: #545c64;
     padding: 10px;
     /*允许拖动*/
     -webkit-app-region: drag;

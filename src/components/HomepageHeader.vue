@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 40px;line-height: 40px; display: flex; width: 100%">
+  <div style="height: 40px;line-height: 40px; display: flex; width: 100%;">
     <div class="left-panel">
       <i class="el-icon-arrow-left my-icon" title="后退"></i>
       <i class="el-icon-arrow-right my-icon" title="前进"></i>
@@ -26,6 +26,8 @@
 
 <script>
 import {requestMusic} from "@/api";
+const { ipcRenderer } = window
+
 export default {
   name: "HomepageHeader",
   data(){
@@ -44,15 +46,15 @@ export default {
     },
     // 关闭窗口
     closeWindow(){
-      window.ipcRenderer.send('close-window');
+      ipcRenderer.send('close-window');
     },
     // 最大化窗口
     maxWindow(){
-      window.ipcRenderer.send('max-window');
+      ipcRenderer.send('max-window');
     },
     // 最小化窗口
     minWindow(){
-      window.ipcRenderer.send('min-window');
+      ipcRenderer.send('min-window');
     }
   }
 }
@@ -90,9 +92,9 @@ export default {
 
   .left-panel {
     flex: 1;
-
     display: flex;
     align-items: center;
+    background: inherit;
   }
 
   .right-panel {
