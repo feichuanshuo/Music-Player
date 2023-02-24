@@ -55,15 +55,48 @@
 <!--音乐列表控件-->
     <div class="music-player-end">
       <div style="padding-right: 10px;color: #ffffff">{{currentTime}} / {{duration}}</div>
-      <i class="iconfont icon-bofangliebiao" style="font-size: 26px;"></i>
+      <div style="font-size: 16px;display: flex; align-items: center;cursor: pointer" @click="showMusicList=true">
+        <i class="iconfont icon-bofangliebiao" style="font-size: 26px;"></i>
+        <p>{{currentMusicList.length}}</p>
+      </div>
     </div>
-    <div class="music-list">
-
-    </div>
+<!--正在播放的音乐列表-->
+    <transition name="musicList" appear>
+      <div class="music-list" v-show="showMusicList">
+        <div class="music-list-top">
+          <div style="font-size: 20px;vertical-align:bottom;">
+            播放队列
+          <div/>
+          <div style="font-size: 10px; color: #7a7c85;margin-top: 10px">
+            {{currentMusicList.length}}首歌曲
+          </div>
+        </div>
+        </div>
+        <div class="music-list-content">
+          <ul>
+            <MusicListItem
+                v-for="(music,index) in currentMusicList"
+                :key="index"
+                :music="music"
+                :playMusic="playMusic"
+                :pauseMusic="pauseMusic"
+                :isHighLight="music===currentMusic"
+            />
+          </ul>
+        </div>
+        <div class="music-list-bottom">
+          <div style="cursor: pointer;font-size: 16px;display: flex;align-items: center" @click="showMusicList=false">
+            <i class="iconfont icon-bofangliebiao" style="font-size: 26px;"></i>
+            <p>收起</p>
+          </div>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
+import MusicListItem from "@/components/MusicPlayer/components/MusicListItem.vue";
 export default {
   name: "MusicPlayer",
   data() {
@@ -77,8 +110,13 @@ export default {
       isDraging: false,
       showBtn: false,
       isMute: false,
-      showVolumeBox: false
+      showVolumeBox: false,
+      showMusicList:false,
+      currentMusicList:[]
     };
+  },
+  components:{
+    MusicListItem
   },
   watch: {
     volume(){
@@ -92,8 +130,11 @@ export default {
   },
   methods: {
     // 设置当前音乐
-    setCurrentMusic(data){
+    setCurrentMusic(data,musicList){
       this.currentMusic = data
+      if (musicList){
+        this.currentMusicList = musicList
+      }
       this.isPlay = true
     },
 
@@ -168,7 +209,8 @@ export default {
     cancelMute(){
       this.isMute = false
       this.$refs.audioRef.muted = false
-    }
+    },
+
   },
   mounted() {
     this.$bus.$on('setCurrentMusic',this.setCurrentMusic)
@@ -298,6 +340,70 @@ export default {
     background: black;
     right: 0;
     top: 0;
+  }
+
+  .musicList-enter-active{
+    animation: showAside 0.2s linear;
+  }
+
+  .musicList-leave-active{
+    animation: showAside 0.2s linear reverse;
+  }
+
+  @keyframes showAside {
+    from{
+      right: -300px;
+    }
+    to{
+      right: 0;
+    }
+  }
+
+  .music-list-top {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100px;
+    background: rgba(84,92,100,0.7);
+    box-sizing: border-box;
+    padding: 20px;
+    color: #ffffff;
+  }
+
+  .music-list-content {
+    position: absolute;
+    top:100px;
+    bottom: 60px;
+    background: rgba(84,92,100,0.7);
+    width: 100%;
+    overflow: auto;
+  }
+
+  .music-list-content li{
+    list-style-type: none;
+    color: #ebebeb;
+    box-sizing: border-box;
+    padding: 0 20px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+  }
+
+  .music-list-bottom {
+    height: 60px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background: rgba(84,92,100,0.7);
+    border-top: #c4c4c4 1px solid;
+  }
+
+  .music-list-bottom>div {
+    padding:4px 20px 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 
 </style>

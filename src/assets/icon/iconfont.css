@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3890274 */
-  src: url('iconfont.woff2?t=1676730846727') format('woff2'),
-       url('iconfont.woff?t=1676730846727') format('woff'),
-       url('iconfont.ttf?t=1676730846727') format('truetype');
+  src: url('iconfont.woff2?t=1677245112271') format('woff2'),
+       url('iconfont.woff?t=1677245112271') format('woff'),
+       url('iconfont.ttf?t=1677245112271') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,14 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-zanting:before {
+  content: "\e62a";
+}
+
+.icon-bofang:before {
+  content: "\e61c";
 }
 
 .icon-1_music82:before {

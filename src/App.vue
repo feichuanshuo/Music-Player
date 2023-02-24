@@ -23,7 +23,7 @@
 import HomepageMenu from "./components/HomepageMenu.vue"
 import HomepageHeader from "./components/HomepageHeader.vue";
 import HomepageContent from "./components/HomepageContent.vue"
-import MusicPlayer from "@/components/MusicPlayer.vue";
+import MusicPlayer from "@/components/MusicPlayer/index.vue";
 export default {
   name: 'App',
   components: {
@@ -66,7 +66,6 @@ export default {
 
   .music-footer {
     background: #545c64;
-    height: 90px;
     padding: 0;
   }
 

@@ -51,7 +51,7 @@ export default {
   },
   methods:{
     changeMusic(data){
-      this.$bus.$emit('setCurrentMusic',data)
+      this.$bus.$emit('setCurrentMusic',data,this.musicList)
     }
   },
   mounted() {
@@ -110,5 +110,7 @@ export default {
   .el-table tbody tr:hover>td {
     background-color: rgba(84,92,100,0.7) !important
   }
-
+  .el-table--border::after, .el-table--group::after, .el-table::before {
+    background: none;
+  }
 </style>
