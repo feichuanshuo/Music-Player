@@ -69,4 +69,28 @@ export default {
     padding: 0;
   }
 
+  /*整个滚动条*/
+  .music-main::-webkit-scrollbar{
+    width:10px;
+    height:10px;
+  }
+  /*滚动条轨道*/
+  .music-main::-webkit-scrollbar-track{
+    background: rgb(239, 239, 239);
+    border-radius:2px;
+  }
+  /*滚动条滑块*/
+  .music-main::-webkit-scrollbar-thumb{
+    background: #bfbfbf;
+    border-radius:10px;
+  }
+  /*滚动条滑块:hover*/
+  .music-main::-webkit-scrollbar-thumb:hover{
+    background: #333;
+  }
+  /*当同时有垂直滚动条和水平滚动条时交汇的部分。通常是浏览器窗口的右下角。*/
+  .music-main::-webkit-scrollbar-corner{
+    background: #179a16;
+  }
+
 </style>

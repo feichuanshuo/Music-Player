@@ -34,6 +34,7 @@ export default {
         }
         else {
           this.$refs.liRef.className = 'item-li'
+          this.isPlay = false
         }
       }
     }
