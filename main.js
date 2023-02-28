@@ -7,6 +7,8 @@ const createWindow = () => {
     const win = new BrowserWindow({
         width: 1020,
         height: 680,
+        minHeight: 680,
+        minWidth: 1020,
         frame: false,
         webPreferences: {
             // 开启渲染进程使用node
@@ -41,6 +43,11 @@ const createWindow = () => {
     ipcMain.on('min-window', () => {
         win.minimize()
     })
+    // 还原窗口
+    ipcMain.on('restore-window', () => {
+        win.restore()
+    })
+
     // 用于在渲染进程中使用主进程
     require('@electron/remote/main').enable(win.webContents)
 

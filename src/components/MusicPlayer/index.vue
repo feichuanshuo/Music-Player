@@ -30,12 +30,18 @@
     </div>
 <!--控制控件-->
     <div class="music-player-control">
-      <i class="iconfont icon-xunhuanbofang" style="font-size: 26px;color: #ffffff;"></i>
-      <i class="iconfont icon-1_music83 music-player-icon" @click="prevMusic"></i>
-      <i class="el-icon-video-pause" v-show="isPlay" @click="pauseMusic"></i>
-      <i class="el-icon-video-play" v-show="!isPlay" @click="playMusic"></i>
-      <i class="iconfont icon-1_music82 music-player-icon" @click="nextMusic"></i>
-      <i class="iconfont icon-zhongdengyinliang volume-btn" @click.self="showVolumeBox=!showVolumeBox">
+      <el-popover
+          placement="top"
+          width="400"
+          trigger="click">
+        <div>dsdsd</div>
+        <i class="iconfont icon-suijibofang1" style="font-size: 26px;color: #ffffff;" slot="reference"></i>
+      </el-popover>
+      <i class="iconfont icon-1_music83 music-player-icon my-btn" @click="prevMusic"></i>
+      <i class="iconfont icon-poweroff-circle-fill music-player-playbtn" v-show="isPlay" @click="pauseMusic"></i>
+      <i class="iconfont icon-play-circle-fill music-player-playbtn" v-show="!isPlay" @click="playMusic"></i>
+      <i class="iconfont icon-1_music82 music-player-icon my-btn" @click="nextMusic"></i>
+      <i class="iconfont icon-zhongdengyinliang volume-btn my-btn" @click.self="showVolumeBox=!showVolumeBox">
           <div class="music-volume" v-if="showVolumeBox">
             <div class="volume-slider">
               <el-slider
@@ -55,7 +61,7 @@
 <!--音乐列表控件-->
     <div class="music-player-end">
       <div style="padding-right: 10px;color: #ffffff">{{currentTime}} / {{duration}}</div>
-      <div style="font-size: 16px;display: flex; align-items: center;cursor: pointer" @click="showMusicList=true">
+      <div class="my-btn" style="font-size: 16px;display: flex; align-items: center;cursor: pointer" @click="showMusicList=true">
         <i class="iconfont icon-bofangliebiao" style="font-size: 26px;"></i>
         <p>{{currentMusicList.length}}</p>
       </div>
@@ -85,7 +91,7 @@
           </ul>
         </div>
         <div class="music-list-bottom">
-          <div style="cursor: pointer;font-size: 16px;display: flex;align-items: center" @click="showMusicList=false">
+          <div class="my-btn" style="cursor: pointer;font-size: 16px;display: flex;align-items: center" @click="showMusicList=false">
             <i class="iconfont icon-bofangliebiao" style="font-size: 26px;"></i>
             <p>收起</p>
           </div>
@@ -262,11 +268,15 @@ export default {
   }
 
   .music-player-control {
-    font-size: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex: 1;
+  }
+
+  .music-player-playbtn {
+    font-size: 50px!important;
+    color: #31c27c!important;
   }
 
   .music-player-end {
@@ -293,14 +303,14 @@ export default {
   }
 
   .progress-bar {
-    background: #15c21d;
+    background: #31c27c;
     height: inherit;
     width: 0;
     position: relative;
   }
 
   .progress-btn {
-    background: #000000;
+    background: #31c27c;
     height:10px;
     width: 10px;
     border-radius: 50%;
@@ -438,21 +448,21 @@ export default {
   }
   /*滚动条轨道*/
   .music-list-content::-webkit-scrollbar-track{
-    background: rgb(239, 239, 239);
+    opacity: 0;
     border-radius:2px;
   }
   /*滚动条滑块*/
   .music-list-content::-webkit-scrollbar-thumb{
-    background: #bfbfbf;
+    background: #333;
     border-radius:10px;
   }
   /*滚动条滑块:hover*/
   .music-list-content::-webkit-scrollbar-thumb:hover{
-    background: #333;
+    background: #bfbfbf;
   }
   /*当同时有垂直滚动条和水平滚动条时交汇的部分。通常是浏览器窗口的右下角。*/
   .music-list-content::-webkit-scrollbar-corner{
-    background: #179a16;
+    background: #31c27c;
   }
 
 

@@ -6,6 +6,83 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "4936505",
+      "name": "poweroff-circle-fill",
+      "font_class": "poweroff-circle-fill",
+      "unicode": "e847",
+      "unicode_decimal": 59463
+    },
+    {
+      "icon_id": "4936507",
+      "name": "play-circle-fill",
+      "font_class": "play-circle-fill",
+      "unicode": "e848",
+      "unicode_decimal": 59464
+    },
+    {
+      "icon_id": "18963668",
+      "name": "随机播放",
+      "font_class": "suijibofang1",
+      "unicode": "e6a0",
+      "unicode_decimal": 59040
+    },
+    {
+      "icon_id": "18963837",
+      "name": "顺序播放",
+      "font_class": "shunxubofang",
+      "unicode": "e6a1",
+      "unicode_decimal": 59041
+    },
+    {
+      "icon_id": "18965480",
+      "name": "单曲循环",
+      "font_class": "danquxunhuan",
+      "unicode": "e6a2",
+      "unicode_decimal": 59042
+    },
+    {
+      "icon_id": "18965481",
+      "name": "列表循环",
+      "font_class": "liebiaoxunhuan",
+      "unicode": "e6a3",
+      "unicode_decimal": 59043
+    },
+    {
+      "icon_id": "4767059",
+      "name": "menu",
+      "font_class": "menu",
+      "unicode": "e7f4",
+      "unicode_decimal": 59380
+    },
+    {
+      "icon_id": "4767096",
+      "name": "close",
+      "font_class": "close",
+      "unicode": "e7fc",
+      "unicode_decimal": 59388
+    },
+    {
+      "icon_id": "4767099",
+      "name": "minus",
+      "font_class": "minus",
+      "unicode": "e7fd",
+      "unicode_decimal": 59389
+    },
+    {
+      "icon_id": "9230691",
+      "name": "compress",
+      "font_class": "compress",
+      "unicode": "e914",
+      "unicode_decimal": 59668
+    },
+    {
+      "icon_id": "9230692",
+      "name": "expend",
+      "font_class": "expend",
+      "unicode": "e915",
+      "unicode_decimal": 59669
+    },
+    {
       "icon_id": "26082667",
       "name": "暂停",
       "font_class": "zanting",
@@ -46,20 +123,6 @@
       "font_class": "zhongdengyinliang",
       "unicode": "e6af",
       "unicode_decimal": 59055
-    },
-    {
-      "icon_id": "20784225",
-      "name": "随机播放",
-      "font_class": "suijibofang",
-      "unicode": "e6bd",
-      "unicode_decimal": 59069
-    },
-    {
-      "icon_id": "20784231",
-      "name": "循环播放",
-      "font_class": "xunhuanbofang",
-      "unicode": "e6bf",
-      "unicode_decimal": 59071
     },
     {
       "icon_id": "27411094",

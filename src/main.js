@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import { Container , Aside , Main , Header , Footer ,Menu , MenuItem , Button , Divider , Avatar , Image ,Slider , Table , TableColumn} from 'element-ui';
+import { Container , Aside , Main , Header , Footer ,Menu , MenuItem , Button , Divider , Avatar , Image ,Slider , Table , TableColumn , Popover} from 'element-ui';
 import './assets/icon/iconfont.css'
 import router from "@/router";
 import store from "@/store";
@@ -21,6 +21,7 @@ Vue.use(Image);
 Vue.use(Slider);
 Vue.use(Table);
 Vue.use(TableColumn);
+Vue.use(Popover);
 
 new Vue({
   render: h => h(App),

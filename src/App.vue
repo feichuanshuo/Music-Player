@@ -76,21 +76,31 @@ export default {
   }
   /*滚动条轨道*/
   .music-main::-webkit-scrollbar-track{
-    background: rgb(239, 239, 239);
+    opacity: 0;
     border-radius:2px;
   }
   /*滚动条滑块*/
   .music-main::-webkit-scrollbar-thumb{
-    background: #bfbfbf;
+    background: #333;
     border-radius:10px;
   }
   /*滚动条滑块:hover*/
   .music-main::-webkit-scrollbar-thumb:hover{
-    background: #333;
+    background: #bfbfbf;
   }
   /*当同时有垂直滚动条和水平滚动条时交汇的部分。通常是浏览器窗口的右下角。*/
   .music-main::-webkit-scrollbar-corner{
-    background: #179a16;
+    background: #31c27c;
+  }
+
+
+  /*自定义按钮样式*/
+  .my-btn:active {
+    transform:translateY(1px);
+  }
+
+  .my-btn:hover {
+    color: #31c27c;
   }
 
 </style>

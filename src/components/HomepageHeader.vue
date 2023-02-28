@@ -14,11 +14,12 @@
         <span>超人阿光</span>
       </div>
       <div class="control-panel">
-        <i class="el-icon-s-operation"></i>
+        <i class="iconfont icon-menu my-btn"></i>
         <el-divider direction="vertical"></el-divider>
-        <i class="el-icon-minus" @click="minWindow"></i>
-        <i class="el-icon-full-screen" @click="maxWindow"></i>
-        <i class="el-icon-close" @click="closeWindow"></i>
+        <i class="iconfont icon-minus my-btn" @click="minWindow"></i>
+        <i v-if="isMax" class="iconfont icon-compress my-btn" @click="restoreWindow"></i>
+        <i v-else class="iconfont icon-expend my-btn" @click="maxWindow"></i>
+        <i class="iconfont icon-close my-btn" @click="closeWindow"></i>
       </div>
     </div>
   </div>
@@ -33,7 +34,8 @@ export default {
   data(){
     return {
       songName: '',
-      searchResult: []
+      searchResult: [],
+      isMax: false
     }
   },
   methods: {
@@ -51,6 +53,12 @@ export default {
     // 最大化窗口
     maxWindow(){
       ipcRenderer.send('max-window');
+      this.isMax = true;
+    },
+    // 还原窗口
+    restoreWindow(){
+      ipcRenderer.send('restore-window');
+      this.isMax = false;
     },
     // 最小化窗口
     minWindow(){

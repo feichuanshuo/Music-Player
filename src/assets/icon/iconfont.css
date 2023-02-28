@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3890274 */
-  src: url('iconfont.woff2?t=1677245112271') format('woff2'),
-       url('iconfont.woff?t=1677245112271') format('woff'),
-       url('iconfont.ttf?t=1677245112271') format('truetype');
+  src: url('iconfont.woff2?t=1677592219008') format('woff2'),
+       url('iconfont.woff?t=1677592219008') format('woff'),
+       url('iconfont.ttf?t=1677592219008') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,50 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-poweroff-circle-fill:before {
+  content: "\e847";
+}
+
+.icon-play-circle-fill:before {
+  content: "\e848";
+}
+
+.icon-suijibofang1:before {
+  content: "\e6a0";
+}
+
+.icon-shunxubofang:before {
+  content: "\e6a1";
+}
+
+.icon-danquxunhuan:before {
+  content: "\e6a2";
+}
+
+.icon-liebiaoxunhuan:before {
+  content: "\e6a3";
+}
+
+.icon-menu:before {
+  content: "\e7f4";
+}
+
+.icon-close:before {
+  content: "\e7fc";
+}
+
+.icon-minus:before {
+  content: "\e7fd";
+}
+
+.icon-compress:before {
+  content: "\e914";
+}
+
+.icon-expend:before {
+  content: "\e915";
 }
 
 .icon-zanting:before {
@@ -35,14 +79,6 @@
 
 .icon-zhongdengyinliang:before {
   content: "\e6af";
-}
-
-.icon-suijibofang:before {
-  content: "\e6bd";
-}
-
-.icon-xunhuanbofang:before {
-  content: "\e6bf";
 }
 
 .icon-bofangliebiao:before {
