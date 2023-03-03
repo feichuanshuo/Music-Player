@@ -1,27 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
-import { Container , Aside , Main , Header , Footer ,Menu , MenuItem , Button , Divider , Avatar , Image ,Slider , Table , TableColumn , Popover} from 'element-ui';
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 import './assets/icon/iconfont.css'
 import router from "@/router";
 import store from "@/store";
 
 Vue.config.productionTip = false
 
-Vue.use(Header)
-Vue.use(Container);
-Vue.use(Aside);
-Vue.use(Footer);
-Vue.use(Main);
-Vue.use(Menu);
-Vue.use(MenuItem);
-Vue.use(Button);
-Vue.use(Divider);
-Vue.use(Avatar);
-Vue.use(Image);
-Vue.use(Slider);
-Vue.use(Table);
-Vue.use(TableColumn);
-Vue.use(Popover);
+Vue.use(ElementUI)
 
 new Vue({
   render: h => h(App),

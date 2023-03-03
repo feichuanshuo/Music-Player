@@ -27,7 +27,7 @@
 
 <script>
 import {requestMusic} from "@/api";
-const { ipcRenderer } = window
+const {ipcRenderer} = window.require('electron')
 
 export default {
   name: "HomepageHeader",

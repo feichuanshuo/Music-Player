@@ -48,6 +48,7 @@ const createWindow = () => {
         win.restore()
     })
 
+
     // 用于在渲染进程中使用主进程
     require('@electron/remote/main').enable(win.webContents)
 
@@ -59,5 +60,4 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit()
 })
-
 

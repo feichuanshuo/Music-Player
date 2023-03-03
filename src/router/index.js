@@ -1,6 +1,6 @@
 import VueRouter from "vue-router";
 import Vue from 'vue'
-import LocalMusic from "@/pages/LocalMusic.vue";
+import LocalMusic from "@/pages/LocalMusic/index.vue";
 
 Vue.use(VueRouter);
 
