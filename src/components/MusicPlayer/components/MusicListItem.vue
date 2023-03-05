@@ -1,17 +1,21 @@
 <template>
   <li
-      class="item-li"
+      :class="{'item-li':!isHighLight,'highlight':isHighLight}"
       @mouseenter="showBtn=true"
       @mouseleave="showBtn=false"
       ref="liRef"
   >
-    <div style="width: 80%">
-      <p class="song-name">{{music.name}}</p>
+    <div style="width: 215px;margin-right: 5px;">
+      <div class="song-name">
+        <p>{{music.name}}</p>
+        <i class="wave" v-show="isHighLight && isPlay"></i>
+      </div>
       <p class="song-singer">{{music.singer}}</p>
     </div>
     <div v-show="showBtn">
-      <i v-show="!isPlay" class="iconfont icon-bofang" @click="play"></i>
-      <i v-show="isPlay" class="iconfont icon-zanting" @click="pause"></i>
+      <i v-show="!isPlay" class="iconfont icon-bofang my-icon-btn" @click="play"></i>
+      <i v-show="isPlay" class="iconfont icon-zanting my-icon-btn" @click="pause"></i>
+      <i class="iconfont icon-shanchu my-icon-btn" style="margin-left: 5px" @click="deleteMusic"></i>
     </div>
   </li>
 </template>
@@ -22,24 +26,9 @@ export default {
   data(){
     return {
       showBtn:false,
-      isPlay: false,
     }
   },
-  watch: {
-    isHighLight:{
-      handler(newValue){
-        if(newValue) {
-          this.$refs.liRef.className = 'highlight'
-          this.isPlay = true
-        }
-        else {
-          this.$refs.liRef.className = 'item-li'
-          this.isPlay = false
-        }
-      }
-    }
-  },
-  props:['music','playMusic','pauseMusic','isHighLight'],
+  props:['music','playMusic','pauseMusic','isHighLight',"isPlay"],
   methods:{
     play(){
       if(this.isHighLight){
@@ -48,11 +37,30 @@ export default {
       else{
         this.$bus.$emit('setCurrentMusic',this.music)
       }
-      this.isPlay=true
     },
     pause(){
-      this.isPlay=false,
       this.pauseMusic()
+    },
+    deleteMusic(){
+      this.$bus.$emit('deleteMusic',this.music)
+    }
+  },
+  updated() {
+    if (this.isHighLight) {
+      this.$refs.liRef.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'nearest'
+      })
+    }
+  },
+  mounted() {
+    if (this.isHighLight) {
+      this.$refs.liRef.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'nearest'
+      })
     }
   }
 }
@@ -62,11 +70,25 @@ export default {
   .item-li:hover,.highlight {
     background: #353535;
   }
+
+  .highlight {
+    color: #31c27c!important;
+  }
   .song-name  {
-    font-size: 16px;
+    display: flex;
+    align-items: center;
+  }
+  .song-name p {
+    width: 150px;
+    font-size: 14px;
+    margin-right: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
   }
   .song-singer  {
     font-size: 10px;
     margin-top: 5px;
   }
+
 </style>

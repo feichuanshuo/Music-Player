@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3890274 */
-  src: url('iconfont.woff2?t=1677592219008') format('woff2'),
-       url('iconfont.woff?t=1677592219008') format('woff'),
-       url('iconfont.ttf?t=1677592219008') format('truetype');
+  src: url('iconfont.woff2?t=1678000597210') format('woff2'),
+       url('iconfont.woff?t=1678000597210') format('woff'),
+       url('iconfont.ttf?t=1678000597210') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,26 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-shanchu:before {
+  content: "\e8b6";
+}
+
+.icon-aixin_shixin:before {
+  content: "\eca1";
+}
+
+.icon-diannao:before {
+  content: "\e86a";
+}
+
+.icon-shizhong:before {
+  content: "\e643";
+}
+
+.icon-recordmachine-01:before {
+  content: "\e740";
 }
 
 .icon-poweroff-circle-fill:before {
@@ -65,11 +85,11 @@
   content: "\e61c";
 }
 
-.icon-1_music82:before {
-  content: "\e6a9";
+.icon-premusic:before {
+  content: "\eca2";
 }
 
-.icon-1_music83:before {
+.icon-nextmusic:before {
   content: "\e6ac";
 }
 

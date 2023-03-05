@@ -14,12 +14,12 @@
         <span>超人阿光</span>
       </div>
       <div class="control-panel">
-        <i class="iconfont icon-menu my-btn"></i>
+        <i class="iconfont icon-menu my-icon-btn"></i>
         <el-divider direction="vertical"></el-divider>
-        <i class="iconfont icon-minus my-btn" @click="minWindow"></i>
-        <i v-if="isMax" class="iconfont icon-compress my-btn" @click="restoreWindow"></i>
-        <i v-else class="iconfont icon-expend my-btn" @click="maxWindow"></i>
-        <i class="iconfont icon-close my-btn" @click="closeWindow"></i>
+        <i class="iconfont icon-minus my-icon-btn" @click="minWindow"></i>
+        <i v-if="isMax" class="iconfont icon-compress my-icon-btn" @click="restoreWindow"></i>
+        <i v-else class="iconfont icon-expend my-icon-btn" @click="maxWindow"></i>
+        <i class="iconfont icon-close my-icon-btn" @click="closeWindow"></i>
       </div>
     </div>
   </div>

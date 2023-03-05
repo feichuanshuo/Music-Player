@@ -18,7 +18,7 @@ export default {
       showBox: false
     };
   },
-  props:['location'],
+  props:['location','boxClass'],
   methods: {
     showMenu(){
       this.showBox = true;
@@ -40,10 +40,10 @@ export default {
   mounted() {
     let {boxRef} = this.$refs
     if(this.location==='top'){
-      boxRef.className = 'my-popover-menu location-top'
+      boxRef.className = 'my-popover-menu location-top' + ' ' + this.boxClass
     }
     else if(this.location==='bottom'){
-      boxRef.className = 'my-popover-menu location-bottom'
+      boxRef.className = 'my-popover-menu location-bottom'+ ' ' + this.boxClass
     }
     else{
       return
@@ -63,7 +63,7 @@ export default {
     width: 120px;
     height: 60px;
     background: #303134;
-    border-radius: 5px;
+    border-radius: 12px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
     z-index: 100;
     font-size: 12px;
@@ -78,5 +78,4 @@ export default {
   .location-bottom {
     top: calc(100% + 5px);
   }
-
 </style>

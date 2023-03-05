@@ -9,11 +9,9 @@ Vue.use(Vuex)
 const actions = {}
 //准备mutations对象——修改state中的数据
 const mutations = {
-
 }
 //准备state对象——保存具体的数据
 const state = {
-
 }
 
 //创建并暴露store

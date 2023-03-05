@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11372693",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e8b6",
+      "unicode_decimal": 59574
+    },
+    {
+      "icon_id": "6775641",
+      "name": "爱心 _实心",
+      "font_class": "aixin_shixin",
+      "unicode": "eca1",
+      "unicode_decimal": 60577
+    },
+    {
+      "icon_id": "9626851",
+      "name": "电脑",
+      "font_class": "diannao",
+      "unicode": "e86a",
+      "unicode_decimal": 59498
+    },
+    {
+      "icon_id": "21242890",
+      "name": "时钟",
+      "font_class": "shizhong",
+      "unicode": "e643",
+      "unicode_decimal": 58947
+    },
+    {
+      "icon_id": "18462083",
+      "name": "唱片机",
+      "font_class": "recordmachine-01",
+      "unicode": "e740",
+      "unicode_decimal": 59200
+    },
+    {
       "icon_id": "4936505",
       "name": "poweroff-circle-fill",
       "font_class": "poweroff-circle-fill",
@@ -97,16 +132,16 @@
       "unicode_decimal": 58908
     },
     {
-      "icon_id": "15262786",
-      "name": "1_music82",
-      "font_class": "1_music82",
-      "unicode": "e6a9",
-      "unicode_decimal": 59049
+      "icon_id": "34414272",
+      "name": "1_music83-copy",
+      "font_class": "premusic",
+      "unicode": "eca2",
+      "unicode_decimal": 60578
     },
     {
       "icon_id": "15262807",
       "name": "1_music83",
-      "font_class": "1_music83",
+      "font_class": "nextmusic",
       "unicode": "e6ac",
       "unicode_decimal": 59052
     },

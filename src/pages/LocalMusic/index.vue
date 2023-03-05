@@ -1,7 +1,9 @@
 <template>
   <div id="localMusicPage">
+<!--遮罩层-->
     <div class="modal-shade" v-show="shade"></div>
     <header class="page-title">本地音乐</header>
+<!--添加音乐弹窗-->
     <Popover location="bottom">
       <template v-slot:box>
         <ul class="popover-menu">
@@ -14,7 +16,9 @@
         </ul>
       </template>
       <template v-slot:button>
-        <el-button round  type="info">添加</el-button>
+        <div class="my-btn my-btn-round">
+          添加
+        </div>
       </template>
     </Popover>
     <div class="page-list">
@@ -26,9 +30,17 @@
           :row-style="{ background: 'rgba(84,92,100,0.0)' , color: '#fff' , border: '0'}"
           :cell-style="{border: 'none'}"
       >
+<!--    无音乐的空状态-->
+        <template v-slot:empty>
+          <div class="empty-box">
+            <i class="iconfont icon-recordmachine-01"></i>
+          </div>
+          <p>暂无音乐，快点击上方添加吧！</p>
+        </template>
+<!--    歌单列表-->
         <el-table-column
             label="歌名"
-            width="180"
+            width="360"
         >
           <template v-slot="data">
             <span @dblclick="changeMusic(data.row)" class="song-title">{{data.row.name}}</span>
@@ -49,11 +61,12 @@
         </el-table-column>
       </el-table>
     </div>
+<!--音乐扫描弹窗-->
     <Popup :show="showScanBox" title="自动扫描添加" @hideModal="()=>{showScanBox=false}" @submit="scanFiles">
       <div class="scan-box">
           <div class="scan-box-header">
             <p>勾选自动扫描的文件夹</p>
-            <button @click="addMusicFile">扫描文件夹</button>
+            <button @click="addMusicFile">添加文件夹</button>
           </div>
           <div class="scan-box-content">
               <ul>
@@ -79,7 +92,6 @@ import Popup from "@/assets/module/Popup.vue";
 const { getCurrentWindow,dialog } = window.require("@electron/remote")
 const fs = window.require("fs")
 const jsmediatags = window.require("jsmediatags")
-// const { iconv} = window
 export default {
   name: "LocalMusic",
   data() {
@@ -198,10 +210,16 @@ export default {
         }
       }
       )
-    }
+    },
   },
-  mounted(){
+  updated() {
+    window.localStorage.setItem('localMusicList',JSON.stringify(this.musicList))
+    window.localStorage.setItem('scanFilePathList',JSON.stringify(this.scanFilePathList))
   },
+  mounted() {
+    this.musicList = JSON.parse(window.localStorage.getItem('localMusicList')) || []
+    this.scanFilePathList = JSON.parse(window.localStorage.getItem('scanFilePathList')) || []
+  }
 }
 </script>
 
@@ -219,27 +237,23 @@ export default {
     z-index: 11;
   }
 
-  .page-title {
-    font-size: 30px;
-    color: #ffffff;
-    font-weight: 600;
-    padding: 20px 0;
-  }
-
   .page-list {
     padding: 10px;
   }
   .song-title {
     cursor: pointer;
     color: #ffffff;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
     -moz-user-select:none;/*火狐*/
     -webkit-user-select:none;/*webkit浏览器*/
     -ms-user-select:none;/*IE10*/
     -khtml-user-select:none;/*早期浏览器*/
     user-select:none;
   }
-  .el-table tbody tr:hover>td {
-    background-color: rgba(84,92,100,0.7) !important
+  .el-table tbody tr:hover>td{
+    background: rgba(84,92,100,0.7) !important
   }
   .el-table--border::after, .el-table--group::after, .el-table::before {
     background: none;
@@ -255,7 +269,7 @@ export default {
   .popover-menu li {
     padding: 5px;
   }
-  .popover-menu li:hover {
+  .popover-menu li:hover{
     background: #3e4146;
     cursor: pointer;
   }
@@ -305,5 +319,14 @@ export default {
     cursor: pointer;
   }
 
+  .empty-box{
+    width: 100%;
+    height: 230px;
+    line-height: 300px;
+  }
+
+  .empty-box i {
+    font-size: 180px;
+  }
 
 </style>

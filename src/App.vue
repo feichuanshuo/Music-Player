@@ -53,8 +53,8 @@ export default {
     height: 100%;
   }
 
-  .music-container,.music-footer,.music-header,.music-main  {
-    background: rgba(84,92,100,0.7);
+  .music-container,.music-header,.music-main  {
+    background: rgba(0,0,0,0.6);
   }
 
   .music-header {
@@ -94,13 +94,53 @@ export default {
   }
 
 
-  /*自定义按钮样式*/
-  .my-btn:active {
+  /*自定义图标按钮样式*/
+  .my-icon-btn{
+    color: rgb(221,224,220);
+  }
+
+  .my-icon-btn:active {
     transform:translateY(1px);
   }
 
-  .my-btn:hover {
-    color: #31c27c;
+  .my-icon-btn:hover {
+    color: #31c27c!important;
   }
 
+  /*自定义普通按钮样式*/
+  .my-btn {
+    padding: 5px;
+    height: 20px;
+    width: 100px;
+    line-height: 20px;
+    color: #ebebeb;
+    font-size: 14px;
+    background: rgb(54,60,63,0.6);
+    text-align: center;
+    border-radius: 5px;
+    border: rgb(54,60,63,0.6) 1px solid;
+    cursor: pointer;
+  }
+  .my-btn-round {
+    border-radius: 20px!important;
+  }
+
+  .my-btn:hover {
+    background: rgba(54,60,63,1);
+  }
+
+
+  .page-title {
+    font-size: 30px;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 20px 0;
+  }
+
+  .wave {
+    width: 10px;
+    height: 10px;
+    background: url("../src/assets/image/wave.gif") 0 0 no-repeat;
+    display: inline-block;
+  }
 </style>
