@@ -4,7 +4,7 @@
     <div class="modal-container">
       <div class="modal-header">
         <p>{{ title }}</p>
-        <i class="iconfont icon-close my-btn" @click="hideModal"></i>
+        <i class="iconfont icon-close my-icon-btn" @click="hideModal"></i>
       </div>
       <div class="modal-main">
         <slot></slot>
@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: "PopupModal",
+  name: "yh-popup",
   props: {
     show: {
       type: Boolean,

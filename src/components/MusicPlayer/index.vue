@@ -104,8 +104,6 @@
                 v-for="(music,index) in currentMusicList"
                 :key="index"
                 :music="music"
-                :playMusic="playMusic"
-                :pauseMusic="pauseMusic"
                 :isHighLight="currentMusic.src===music.src"
                 :isPlay="currentMusic.src===music.src?isPlay:false"
             />
@@ -167,6 +165,8 @@ export default {
     setCurrentMusic(data,musicList){
       this.$refs.audioRef.autoplay = true
       this.currentMusic = data
+      this.$store.commit('setCurrentMusic',data)
+      this.$store.commit('setPlayerStatus',true)
       window.localStorage.setItem('currentMusic',JSON.stringify(this.currentMusic))
       if (musicList){
         this.currentMusicList = musicList.slice(0)
@@ -188,11 +188,13 @@ export default {
     playMusic(){
       this.isPlay = true
       this.$refs.audioRef.play()
+      this.$store.commit('setPlayerStatus',true)
     },
     // 暂停音乐
     pauseMusic(){
       this.isPlay = false
       this.$refs.audioRef.pause()
+      this.$store.commit('setPlayerStatus',false)
     },
     // 从当前播放列表中删除歌曲
     deleteMusic(music){
@@ -314,12 +316,23 @@ export default {
 
   },
   mounted() {
+    // 对外接口
     this.$bus.$on('setCurrentMusic',this.setCurrentMusic)
-    this.$bus.$on('deleteMusic',this.deleteMusic)
-    this.$refs.audioRef.addEventListener('ended',this.nextMusic)
-    this.currentMusic = JSON.parse(window.localStorage.getItem('currentMusic'))
-    this.currentMusicList = JSON.parse(window.localStorage.getItem('currentMusicList'))
-    this.playMode = JSON.parse(window.localStorage.getItem('playMode'))
+    this.$bus.$on('delMusicFromPL',this.deleteMusic)
+    this.$bus.$on('getCurrentMusic',this.getCurrentMusic)
+    this.$bus.$on('playMusic',this.playMusic)
+    this.$bus.$on('pauseMusic',this.pauseMusic)
+
+    // 播放器初始化
+    if(this.playMode.musicList.length!==0){
+      this.$refs.audioRef.addEventListener('ended',this.nextMusic)
+    }
+    if(window.localStorage.getItem('currentMusic'))
+      this.currentMusic = JSON.parse(window.localStorage.getItem('currentMusic'))
+    if(window.localStorage.getItem('currentMusicList'))
+      this.currentMusicList = JSON.parse(window.localStorage.getItem('currentMusicList'))
+    if(window.localStorage.getItem('playMode'))
+      this.playMode = JSON.parse(window.localStorage.getItem('playMode'))
     this.$refs.audioRef.autoplay = false
   }
 }

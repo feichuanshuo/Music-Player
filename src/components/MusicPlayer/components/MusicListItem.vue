@@ -28,21 +28,21 @@ export default {
       showBtn:false,
     }
   },
-  props:['music','playMusic','pauseMusic','isHighLight',"isPlay"],
+  props:['music','isHighLight',"isPlay"],
   methods:{
     play(){
       if(this.isHighLight){
-        this.playMusic()
+        this.$bus.$emit('playMusic')
       }
       else{
         this.$bus.$emit('setCurrentMusic',this.music)
       }
     },
     pause(){
-      this.pauseMusic()
+      this.$bus.$emit('pauseMusic')
     },
     deleteMusic(){
-      this.$bus.$emit('deleteMusic',this.music)
+      this.$bus.$emit('delMusicFromPL',this.music)
     }
   },
   updated() {

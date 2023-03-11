@@ -9,9 +9,20 @@ Vue.use(Vuex)
 const actions = {}
 //准备mutations对象——修改state中的数据
 const mutations = {
+    //设置当前音乐的方法
+    setCurrentMusic(state,music){
+        state.currentMusic = music
+    },
+    // 设置播放器状态的方法
+    setPlayerStatus(state,isPlay){
+        state.isPlay = isPlay
+    }
+
 }
 //准备state对象——保存具体的数据
 const state = {
+    currentMusic:{},
+    isPlay:false
 }
 
 //创建并暴露store

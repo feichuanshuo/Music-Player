@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: "myPopover",
+  name: "yh-popover",
   data(){
     return {
       showBox: false

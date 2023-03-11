@@ -21,45 +21,8 @@
         </div>
       </template>
     </Popover>
-    <div class="page-list">
-      <el-table
-          :data="musicList"
-          style="width: 100%;background: inherit"
-          :header-cell-style="{ background: 'rgba(84,92,100,0.0)', color: '#c3c3c5',border: 'none' }"
-          :header-row-style="{ background: 'rgba(84,92,100,0.0)'}"
-          :row-style="{ background: 'rgba(84,92,100,0.0)' , color: '#fff' , border: '0'}"
-          :cell-style="{border: 'none'}"
-      >
-<!--    无音乐的空状态-->
-        <template v-slot:empty>
-          <div class="empty-box">
-            <i class="iconfont icon-recordmachine-01"></i>
-          </div>
-          <p>暂无音乐，快点击上方添加吧！</p>
-        </template>
-<!--    歌单列表-->
-        <el-table-column
-            label="歌名"
-            width="360"
-        >
-          <template v-slot="data">
-            <span @dblclick="changeMusic(data.row)" class="song-title">{{data.row.name}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-            label="歌手"
-            width="180">
-          <template v-slot="data">
-            <span class="song-title">{{data.row.singer}}</span>
-          </template>
-        </el-table-column>
-        <el-table-column
-            label="专辑">
-          <template v-slot="data">
-            <span class="song-title">{{data.row.album}}</span>
-          </template>
-        </el-table-column>
-      </el-table>
+    <div class="page-content">
+      <Table :table-data="musicList"></Table>
     </div>
 <!--音乐扫描弹窗-->
     <Popup :show="showScanBox" title="自动扫描添加" @hideModal="()=>{showScanBox=false}" @submit="scanFiles">
@@ -76,7 +39,7 @@
                   >
                     {{item.path}}
                   </el-checkbox>
-                  <i class="iconfont icon-close my-btn" @click="()=>{scanFilePathList.splice(index,1)}"></i>
+                  <i class="iconfont icon-close my-icon-btn" @click="()=>{scanFilePathList.splice(index,1)}"></i>
                 </li>
               </ul>
           </div>
@@ -89,9 +52,8 @@
 import {Message} from "element-ui";
 import Popover from "../../assets/module/Popover.vue";
 import Popup from "@/assets/module/Popup.vue";
-const { getCurrentWindow,dialog } = window.require("@electron/remote")
-const fs = window.require("fs")
-const jsmediatags = window.require("jsmediatags")
+import Table from "@/assets/module/Table.vue";
+const { getCurrentWindow,dialog,fs,jsmediatags } = window
 export default {
   name: "LocalMusic",
   data() {
@@ -106,7 +68,7 @@ export default {
     }
   },
   components: {
-    Popover,Popup
+    Popover,Popup,Table
   },
   methods:{
     // 更换歌曲
@@ -201,7 +163,7 @@ export default {
           }
           else{
             // 添加成功
-            this.musicList.push(musicMessage);
+            this.musicList.unshift(musicMessage);
             return true
           }
         },
@@ -211,6 +173,12 @@ export default {
       }
       )
     },
+
+    // 删除列表中的音乐
+    deleteMusic(music){
+      let index = this.musicList.findIndex(item=>item.src === music.src)
+      this.musicList.splice(index,1)
+    }
   },
   updated() {
     window.localStorage.setItem('localMusicList',JSON.stringify(this.musicList))
@@ -219,11 +187,13 @@ export default {
   mounted() {
     this.musicList = JSON.parse(window.localStorage.getItem('localMusicList')) || []
     this.scanFilePathList = JSON.parse(window.localStorage.getItem('scanFilePathList')) || []
+    this.$bus.$on('delMusicFromLL',this.deleteMusic)
+    this.$bus.$on('changeMusic',this.changeMusic)
   }
 }
 </script>
 
-<style>
+<style scoped>
   #localMusicPage {
     background: inherit;
   }
@@ -237,21 +207,10 @@ export default {
     z-index: 11;
   }
 
-  .page-list {
+  .page-content {
     padding: 10px;
   }
-  .song-title {
-    cursor: pointer;
-    color: #ffffff;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow:ellipsis;
-    -moz-user-select:none;/*火狐*/
-    -webkit-user-select:none;/*webkit浏览器*/
-    -ms-user-select:none;/*IE10*/
-    -khtml-user-select:none;/*早期浏览器*/
-    user-select:none;
-  }
+
   .el-table tbody tr:hover>td{
     background: rgba(84,92,100,0.7) !important
   }
